@@ -101,6 +101,4 @@ func main() {
 	}
 	fmt.Printf("After delete, myGreeting2: %v\n", myGreeting2)
 
-
-
 }
