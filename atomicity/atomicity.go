@@ -5,11 +5,12 @@ import (
 	"sync"
 	"time"
 	"math/rand"
+	"sync/atomic"
 )
 
 var wg sync.WaitGroup
-var counter int
-var mutex sync.Mutex
+var counter int64
+
 
 func main() {
 
@@ -24,12 +25,10 @@ func incrementor(s string) {
 	for i:= 0; i < 20; i++ {
 		time.Sleep(time.Duration(rand.Intn(20)) * time.Millisecond)
 
-		mutex.Lock()
-		x := counter
-		x++
-		counter = x
+		atomic.AddInt64(&counter, 1)
+
 		fmt.Println(s, i, "Counter:", counter)
-		mutex.Unlock()
+
 	}
 	wg.Done()
 }
