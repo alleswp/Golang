@@ -12,23 +12,21 @@ func main() {
 
 	for i := 0; i < n; i++ {
 		go func() {
-			for i := 0; i < n; i++ {
+			for i := 0; i < 10; i++ {
 				c <- i
 			}
 			done <- true
 		}()
 	}
 
-
-
 	go func() {
 		for i := 0; i < n; i++ {
-			<- done
+			<-done
 		}
 		close(c)
 	}()
 
-	for n:= range c {
+	for n := range c {
 		fmt.Println(n)
 	}
 }

@@ -5,7 +5,6 @@ import (
 )
 
 func main() {
-
 	c := make(chan int)
 
 	go func() {
@@ -15,8 +14,8 @@ func main() {
 		close(c)
 	}()
 
-		for n := range c {
-			fmt.Println(n)
-		}
+	for n := range c {
+		fmt.Println(n)
+	}
 
 }

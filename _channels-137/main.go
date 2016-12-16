@@ -6,7 +6,7 @@ import (
 
 func main() {
 
-	c := make (chan int)
+	c := make(chan int)
 	done := make(chan bool)
 
 	go func() {
@@ -18,18 +18,16 @@ func main() {
 
 	go func() {
 		for n := range c {
-			fmt.Println("Go Routine 1: ", n)
+			fmt.Println(n)
 		}
 		done <- true
 	}()
 
 	go func() {
 		for n := range c {
-			fmt.Println("Go Routine 2: ", n)
+			fmt.Println(n)
 		}
 		done <- true
 	}()
 
-	<- done
-	<- done
 }

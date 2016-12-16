@@ -3,25 +3,22 @@ package main
 import "fmt"
 
 func main() {
-
-	c := incrementor()
-	cSum := puller(c)
-	for n := range cSum {
-		fmt.Println(n)
-	}
+	incFoo := incrementor("Foo: ")
+	incBar := incrementor("Bar: ")
+	pullFoo := puller(incFoo)
+	pullBar := puller(incBar)
+	fmt.Println("Final Counter: ", <-pullFoo+<-pullBar)
 }
 
-
-func incrementor() chan int {
+func incrementor(s string) chan int {
 	out := make(chan int)
 	go func() {
-		for i := 0; i < 10; i++ {
-			fmt.Println("incrementor: ", i)
+		for i := 0; i < 20; i++ {
 			out <- i
+			fmt.Println(s, i)
 		}
 		close(out)
 	}()
-	fmt.Println("incrementor returning")
 	return out
 }
 
@@ -31,7 +28,6 @@ func puller(c chan int) chan int {
 		var sum int
 		for n := range c {
 			sum += n
-			fmt.Println("puller: ", n)
 		}
 		out <- sum
 		close(out)
