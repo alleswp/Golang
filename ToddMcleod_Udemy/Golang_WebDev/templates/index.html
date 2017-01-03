@@ -1,0 +1,50 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <form id="search-form" onsubmit="return false">
+            <input name="search" />
+            <input type="submit" value="Search" onclick="submitSearch()"/>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th width="40%">Title</th>
+                    <th width="30%">Author</th>
+                    <th width="10%">Year</th>
+                    <th width="20%">ID</th>
+                </tr>
+            </thead>
+            <tbody id="search-results"></tbody>
+        </table>
+        
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script>
+            function submitSearch() {
+                $.ajax({
+                    url: "/search",
+                    method: "POST",
+                    data: $("#search-form").serialize(),
+                    success: function(rawData) {
+                        let parsed = JSON.parse(rawData)
+                        if (!parsed) {
+                            return
+                        }
+                        let searchResults = $("#search-results")
+                        searchResults.empty()
+
+                        parsed.forEach(function(result) {
+                            let row = $("<tr><td>" + result.Title + "</td><td>" +
+                            result.Author + "</td><td>" + result.Year + "</td><td>" +
+                            result.ID + "</td></tr>")
+                            searchResults.append(row)
+                        })
+                    }
+                    })
+                return false
+            }
+        </script>
+    </body>
+</html>
