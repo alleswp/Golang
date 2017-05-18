@@ -1,7 +1,7 @@
 package main
 
 import "fmt"
-import "github.com/alleswp/Golang/golang-web-dev/main/maps"
+import "maps"
 
 func main() {
 	maps.Maps()
